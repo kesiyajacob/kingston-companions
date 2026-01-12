@@ -10,7 +10,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///friendship.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Set this to True while styling, False when you want real API calls
-USE_MOCK_RESPONSE = False
+USE_MOCK_RESPONSE = True
 
 # connect db to app
 db.init_app(app)
