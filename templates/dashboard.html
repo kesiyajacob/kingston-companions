@@ -58,19 +58,27 @@
 
     </section>
 
+    <!-- YOU MIGHT LIKE -->
     <h2>You might like...</h2>
 
-    <section class="activity-grid">
-        {% for activity in suggestions %}
-            <div class="activity-card">
-                <img src="{{ url_for('static', filename='placeholder_activity.jpg') }}" alt="Activity">
-                <p>{{ activity.name }}</p>
-                <span class="interest-count">
-                    {{ loop.index * 3 }} people interested
-                </span>
-            </div>
-        {% endfor %}
+    <section class="suggestions-wrapper">
+
+        <div class="activity-grid">
+            {% for activity in suggestions %}
+                <div class="activity-card">
+                    <img src="{{ url_for('static', filename='placeholder_activity.jpg') }}">
+                    <p>{{ activity.name }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- VIEW ALL OUTINGS ARROW -->
+        <a href="{{ url_for('outings') }}" class="view-all-circle" title="View all outings">
+            →
+        </a>
+
     </section>
+
 
 </main>
 

@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from models import db, User, Activity
 from werkzeug.security import generate_password_hash, check_password_hash
 import openai
-import random
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -70,12 +71,44 @@ def dashboard():
             outing=suggested_outing,
             match_reason=match_reason,
             outing_reason=outing_reason,
-            suggestions=activities[:4]
+            suggestions = activities[:4]
         )
 
     # ---------- REAL OPENAI MODE ----------
     matched_user = other_users[0]
     suggested_outing = activities[0]
+
+    # ----- AI: Pick activities user might like -----
+    activity_list = ""
+    for act in activities:
+        activity_list += f"- {act.name}: {act.description}\n"
+
+    activity_prompt = f"""
+    User interests:
+    {user.interests}
+
+    Here are available places seniors in Kingston can visit:
+    {activity_list}
+
+    Choose the 4 places that best match the user's interests.
+    Respond ONLY with a comma-separated list of activity names.
+    """
+
+    activity_response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You recommend enjoyable outings for seniors."},
+            {"role": "user", "content": activity_prompt}
+        ],
+        temperature=0.4,
+        max_tokens=100
+    )
+
+    chosen_names = activity_response.choices[0].message.content
+    chosen_names = [name.strip() for name in chosen_names.split(",")]
+
+    suggestions = Activity.query.filter(Activity.name.in_(chosen_names)).all()
+
 
     prompt = f"""
 You are a warm, friendly matchmaker helping seniors in Kingston form friendships.
@@ -135,7 +168,7 @@ OUTING_REASON:
         outing=suggested_outing,
         match_reason=match_reason,
         outing_reason=outing_reason,
-        suggestions=activities[:4]
+        suggestions=suggestions
     )
 
 
@@ -183,6 +216,14 @@ def register():
             return redirect(url_for('dashboard'))
         
     return render_template('auth.html', active_tab='register')
+
+
+#--------------VIEW OUTINGS-------------------------------------
+
+@app.route("/outings")
+def outings():
+    activities = Activity.query.all()
+    return render_template("outings.html", activities=activities)
 
 
 if __name__ == "__main__":

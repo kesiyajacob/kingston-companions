@@ -1,0 +1,8 @@
+<h1>All Outings in Kingston</h1>
+
+{% for activity in activities %}
+    <div>
+        <h3>{{ activity.name }}</h3>
+        <p>{{ activity.description }}</p>
+    </div>
+{% endfor %}
