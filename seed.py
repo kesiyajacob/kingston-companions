@@ -1,5 +1,6 @@
 from app import app
 from models import db, Activity, User
+from werkzeug.security import generate_password_hash, check_password_hash
 
 with app.app_context():
     db.drop_all()
@@ -395,29 +396,58 @@ with app.app_context():
         
     ]
 
+
     fake_users = [
-    {"username": "Alice", "interests": "reading, gardening, knitting", 
-     "bio": "I love reading historical novels, knitting scarves, and relaxing in tea gardens.", 
-     "mobility_level": "low-impact"},
-    {"username": "Bob", "interests": "chess, walking, history", 
-     "bio": "I enjoy playing chess, visiting historical sites, and taking short walks outdoors.", 
-     "mobility_level": "moderate"},
-    {"username": "Carol", "interests": "painting, board games, cooking", 
-     "bio": "I paint, bake, and play board games with friends.", 
-     "mobility_level": "low-impact"},
-    {"username": "Dave", "interests": "hiking, kayaking, photography", 
-     "bio": "I love active adventures like hiking, kayaking, and photography outdoors.", 
-     "mobility_level": "active"},
-    {"username": "Eve", "interests": "music, theatre, dancing", 
-     "bio": "I enjoy music, theatre, and dancing at social events.", 
-     "mobility_level": "moderate"}
+    {
+        'username': 'Alice',
+        'email': 'alice@example.com', 
+        'password': generate_password_hash('password123'),  
+        'interests': 'reading, gardening, knitting',
+        'bio': 'I love reading historical novels, knitting scarves, and relaxing in tea gardens.'
+    },
+    {
+        'username': 'Bob',
+        'email': 'bob@example.com',  
+        'password': generate_password_hash('password123'),  
+        'interests': 'hiking, photography, cooking',
+        'bio': 'Outdoor enthusiast who loves capturing nature and trying new recipes.'
+    },
+    {
+        'username': 'Carol',
+        'email': 'carol@example.com',  
+        'password': generate_password_hash('password123'),  
+        'interests': 'painting, yoga, coffee shops',
+        'bio': 'Creative soul seeking peaceful activities and meaningful conversations.'
+    },
+    {
+    "username": "Dave",
+    "email": "dave@example.com",
+    "password": generate_password_hash('password123'),
+    "interests": "hiking, kayaking, photography", 
+    "bio": "I love active adventures like hiking, kayaking, and photography outdoors."
+},
+{
+    "username": "Eve",
+    "email": "eve@example.com",
+    "password": generate_password_hash('password123'),
+    "interests": "music, theatre, dancing", 
+    "bio": "I enjoy music, theatre, and dancing at social events."
+}
+
 ]
+
 
     db.session.add_all(activities)
     for u in fake_users:
         if not User.query.filter_by(username=u['username']).first():
-            user = User(username=u['username'], interests=u['interests'], bio=u['bio'])
-            db.session.add(user)
+            user = User(
+                username=u['username'],
+                email=u['email'],
+                password=u['password'],
+                interests=u['interests'],
+                bio=u['bio']
+            )
+        db.session.add(user)
     db.session.commit()
 
     print("Database seeded!")

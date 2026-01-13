@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///friendship.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Set this to True while styling, False when you want real API calls
-USE_MOCK_RESPONSE = True
+USE_MOCK_RESPONSE = False
 
 # connect db to app
 db.init_app(app)
@@ -22,33 +22,18 @@ with app.app_context():
 
 #------Home route----------------------------------
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
-    if request.method == "POST":
-        username = request.form["username"]
-        interests = request.form["interests"]
-        bio = request.form["bio"]
-
-        user = User.query.filter_by(username=username).first()
-        if user:
-            user.interests = interests
-            user.bio = bio
-        else:
-            user = User(username=username, interests=interests, bio=bio)
-            db.session.add(user)
-        db.session.commit()
-
-        session["username"] = username
-        return redirect(url_for("dashboard"))
-
-    return render_template("index.html")
+    if 'username' in session:
+        return redirect(url_for('dashboard'))
+    return redirect(url_for('login'))
 
 
 @app.route("/dashboard")
 def dashboard():
     username = session.get("username")
     if not username:
-        return redirect(url_for("index"))
+        return render_template("auth.html")
 
     user = User.query.filter_by(username=username).first()
     other_users = User.query.filter(User.username != username).all()
@@ -89,12 +74,13 @@ def dashboard():
     prompt = f"""
 You are a warm, friendly matchmaker helping seniors in Kingston form friendships.
 
+You are speaking directly to:
 User:
 Name: {user.username}
 Interests: {user.interests}
 Bio: {user.bio}
 
-Potential friend:
+You're introducing them to a potential friend:
 Name: {matched_user.username}
 Interests: {matched_user.interests}
 Bio: {matched_user.bio}
@@ -103,7 +89,7 @@ Suggested activity:
 Name: {suggested_outing.name}
 Description: {suggested_outing.description}
 
-Please respond in this exact format:
+Please respond in this exact format, speaking directly to {user.username}:
 
 MATCH_REASON:
 (2-3 friendly sentences explaining why these two people would get along)
@@ -158,9 +144,9 @@ def login():
         user = User.query.filter_by(username=username).first()
 
         if user and check_password_hash(user.password, password):
-            session['user_id'] = user.id
+            session['username'] = user.username
             flash('Login successful!', 'success')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('dashboard')) 
         else:
             flash('Invalid username or password', 'danger')
 
@@ -174,6 +160,8 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        bio = request.form['bio']
+        interests = request.form['interests']
 
         if User.query.filter_by(username=username).first():
             flash('Username not available', 'danger')
@@ -182,12 +170,13 @@ def register():
         else: 
             password_hash= generate_password_hash(password)
 
-            new_user = User(username= username, email=email, password=password_hash)
+            new_user = User(username= username, email=email, password=password_hash, bio=bio, interests=interests)
 
             db.session.add(new_user)
             db.session.commit()
-            session['user_id'] = new_user.id
+            session['username'] = new_user.username
             return redirect(url_for('dashboard'))
+        
     return render_template('auth.html', active_tab='register')
 
 

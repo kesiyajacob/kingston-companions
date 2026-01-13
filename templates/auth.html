@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
     <title>Kingston Companions</title>
 </head>
 <body>
@@ -67,6 +67,14 @@
             <div class="form-group">
                 <label for="register-confirm-password">Confirm Password</label>
                 <input type="password" id="register-confirm-password" name="confirm_password" required>
+            </div>
+            <div class="form-group">
+                <label for="register-bio">About you</label>
+                <input type="text" id="register-bio" name="bio" required>
+            </div>
+            <div class="form-group">
+                <label for="register-interests">Your interests</label>
+                <input type="text" id="register-interests" name="interests" required>
             </div>
             <button type="submit" class="btn-submit">Create Account</button>
         </form>
