@@ -15,5 +15,6 @@ class Activity(db.Model):
     name = db.Column(db.String(100), nullable=False)
     keywords = db.Column(db.Text)
     description = db.Column(db.Text)
+    image = db.Column(db.String(200))
     
     

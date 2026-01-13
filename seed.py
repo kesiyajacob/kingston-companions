@@ -10,67 +10,77 @@ with app.app_context():
         Activity(
             name="Canada's Penitentiary Museum",
             keywords="history, learning, quiet, seated, indoor, conversational",
-            description="Explore Canada’s federal corrections history in a historic building, with exhibits on prison life, rehabilitation programs, inmate arts and crafts, and historical artifacts"
+            description="Explore Canada’s federal corrections history in a historic building, with exhibits on prison life, rehabilitation programs, inmate arts and crafts, and historical artifacts",
+            image="penitentiary.jpg"
+
         ),
         Activity(
             name="1000 Islands Cruise",
             keywords="scenic, nature, relaxed, seated, outdoor, conversational",
-            description="Enjoy scenic cruises along the St. Lawrence River, passing historic estates and islands, with options for sightseeing, dining, and live commentary."
-            
+            description="Enjoy scenic cruises along the St. Lawrence River, passing historic estates and islands, with options for sightseeing, dining, and live commentary.",
+            image="1000_islands_cruise.jpg"
+    
         ),
         Activity(
             name="Fort Henry National Historic Site",
             keywords="history, outdoor, walking, learning, scenic",
-            description="Tour a 19th-century military fort with historic buildings, reenactments, and panoramic views of Kingston Harbour."
+            description="Tour a 19th-century military fort with historic buildings, reenactments, and panoramic views of Kingston Harbour.",
+            image="fort_henry.jpg"
            
         ),
-
         Activity(
             name="Great Lakes Museum",
             keywords="history, learning, quiet, indoor",
-            description="Discover exhibits about the ecology, history, and shipping of the Great Lakes, with interactive displays and artifacts."
-            #add address
+            description="Discover exhibits about the ecology, history, and shipping of the Great Lakes, with interactive displays and artifacts.",
+            image="great_lakes_museum.png"
+
         ),
         Activity(
             name="Miller Museum of Geology",
             keywords="learning, science, quiet, indoor",
-            description="Explore collections of rocks, minerals, and fossils while learning about geological history in an indoor museum setting."
+            description="Explore collections of rocks, minerals, and fossils while learning about geological history in an indoor museum setting.",
+            image="miller_museum_of_geology.jpg"
             
         ),
         Activity(
             name="Frontenac County Schools Museum",
             keywords="history, learning, quiet, indoor",
-            description="Explore exhibits on the history of local education and schools in an indoor museum setting."
+            description="Explore exhibits on the history of local education and schools in an indoor museum setting.",
+            image="frontenac_county_schools_museum.webp"
             
         ),
         Activity(
             name="Military Communications & Electronics Museum",
             keywords="history, learning, quiet, indoor",
-            description="Discover military technology and electronics history through indoor exhibits and artifacts."
+            description="Discover military technology and electronics history through indoor exhibits and artifacts.",
+            image="military_communications.jpeg"
             
         ),
         Activity(
             name="Original Hockey Hall of Fame",
             keywords="history, sports, learning, indoor, conversational",
-            description="View hockey memorabilia and exhibits in an indoor, seated space suitable for fans and casual visitors."
-           
+            description="View hockey memorabilia and exhibits in an indoor, seated space suitable for fans and casual visitors.",
+            image="original_hockey_hall_of_fame.webp"
         ),
         Activity(
             name="Pumphouse Museum",
             keywords="history, learning, quiet, indoor",
-            description="Explore the museum’s model trains, local history exhibits, and interactive displays indoors."
+            description="Explore the museum’s model trains, local history exhibits, and interactive displays indoors.",
+            image="pumphouse_museum.jpg"
        
         ),
         Activity(
             name="Historic City Hall",
             keywords="history, learning, quiet, indoor",
-            description="Tour the historic building and learn about Kingston’s civic history in an indoor setting."
+            description="Tour the historic building and learn about Kingston’s civic history in an indoor setting.",
+            image="historic_city_hall.jpg"
        
         ),
         Activity(
             name="Canadian Museum of Healthcare",
             keywords="history, learning, quiet, indoor",
-            description="Explore exhibits on the history of healthcare and medicine indoors."
+            description="Explore exhibits on the history of healthcare and medicine indoors.",
+            image="canadian_museum_of_healthcare.webp"
             
         ),
         Activity(
@@ -241,7 +251,8 @@ with app.app_context():
         ),Activity(
             name="Breakwater Park",
             keywords="nature, scenic, outdoor, walking",
-            description="Relax or stroll along waterfront paths and open spaces with lake views."
+            description="Relax or stroll along waterfront paths and open spaces with lake views.",
+            image="breakwater_park.webp"
             
         ),Activity(
             name="Kingston Public Market",

@@ -16,7 +16,7 @@
     <nav>
         <a class="active" href="#">Dashboard</a>
         <a href="#">Find Matches</a>
-        <a href="#">View Outings</a>
+        <a href="#">View All Outings</a>
         <a href="#">Profile</a>
         <a href="#">Logout</a>
     </nav>
@@ -66,7 +66,7 @@
         <div class="activity-grid">
             {% for activity in suggestions %}
                 <div class="activity-card">
-                    <img src="{{ url_for('static', filename='placeholder_activity.jpg') }}">
+                    <img src="{{ url_for('static', filename='activities/' + activity.image) }}" alt="{{ activity.name }}">
                     <p>{{ activity.name }}</p>
                 </div>
             {% endfor %}
