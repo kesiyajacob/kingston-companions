@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from models import db, User, Activity
 from werkzeug.security import generate_password_hash, check_password_hash
 import openai
+import random
+
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
@@ -37,83 +39,112 @@ def index():
         db.session.commit()
 
         session["username"] = username
-        return redirect(url_for("match"))
+        return redirect(url_for("dashboard"))
 
     return render_template("index.html")
 
 
-#------Match route----------------------------------
-
-
-@app.route("/match")
-def match():
+@app.route("/dashboard")
+def dashboard():
     username = session.get("username")
     if not username:
         return redirect(url_for("index"))
-    
+
     user = User.query.filter_by(username=username).first()
     other_users = User.query.filter(User.username != username).all()
     activities = Activity.query.all()
-    
+
     if not other_users:
         return "No other users to match with yet."
-    
-    # Use mock response during development
+
+    # ---------- MOCK MODE ----------
     if USE_MOCK_RESPONSE:
-        match_data = {
-            'greeting': "Hey Bobert! I've found someone you might enjoy meeting!",
-            'match_name': "Carol",
-            'match_reason': "You both have that creative spark - you with your baking and archery, and Carol with her painting and cooking. I can already imagine you two swapping recipes and sharing stories!",
-            'activities': [
-                {
-                    'name': 'Crock A Doodle',
-                    'description': "Perfect for Carol's artistic side, and you'd enjoy the creative outlet too. Chat while you paint!"
-                },
-                {
-                    'name': 'Strategies Board Game Café',
-                    'description': "Carol loves board games! Grab coffee and enjoy some friendly competition."
-                },
-                {
-                    'name': 'Victoria Park',
-                    'description': "Take a leisurely walk and just talk. The best friendships grow in simple moments."
-                }
-            ],
-            'closing': "I have a really good feeling about you two! 😊"
-        }
-        return render_template("match.html", username=username, match=match_data)
+        matched_user = User.query.filter_by(username="Carol").first()
+        suggested_outing = Activity.query.filter_by(name="Breakwater Park").first()
 
-    
-    # Build prompt - speaking TO the user
+        match_reason = (
+            "You both enjoy relaxed, creative activities and value good conversation. "
+            "Your shared love for calm, social hobbies makes this a natural connection."
+        )
+
+        outing_reason = (
+            "Breakwater Park offers a peaceful setting for walking and chatting, "
+            "which fits both of your interests and energy levels."
+        )
+
+        return render_template(
+            "dashboard.html",
+            user=user,
+            match=matched_user,
+            outing=suggested_outing,
+            match_reason=match_reason,
+            outing_reason=outing_reason,
+            suggestions=activities[:4]
+        )
+
+    # ---------- REAL OPENAI MODE ----------
+    matched_user = other_users[0]
+    suggested_outing = activities[0]
+
     prompt = f"""
-I'm helping {user.username} find a friend to connect with.
+You are a warm, friendly matchmaker helping seniors in Kingston form friendships.
 
-{user.username}'s interests: {user.interests}
-{user.username}'s bio: {user.bio}
+User:
+Name: {user.username}
+Interests: {user.interests}
+Bio: {user.bio}
 
-Here are some potential friends:
+Potential friend:
+Name: {matched_user.username}
+Interests: {matched_user.interests}
+Bio: {matched_user.bio}
+
+Suggested activity:
+Name: {suggested_outing.name}
+Description: {suggested_outing.description}
+
+Please respond in this exact format:
+
+MATCH_REASON:
+(2-3 friendly sentences explaining why these two people would get along)
+
+OUTING_REASON:
+(1-2 sentences explaining why this activity suits both people)
 """
-    for u in other_users:
-        prompt += f"- {u.username}: Interests in {u.interests}. {u.bio}\n"
-    
-    prompt += "\nActivities they could do together:\n"
-    for act in activities:
-        prompt += f"- {act.name}: {act.description} (Keywords: {act.keywords})\n"
-    
-    prompt += f"\nPlease talk directly to {user.username}. Suggest who would be a great friend match and recommend 1-3 activities they'd enjoy together. Be warm, conversational, and natural - like a friendly matchmaker, not a formal report."
-    
-    # Call OpenAI Chat Completions API
+
     response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a warm, friendly matchmaker helping seniors find friendship. Speak directly to the user in a natural, conversational way. Avoid repetition and be concise but personable."},
+            {
+                "role": "system",
+                "content": "You are kind, conversational, and supportive. Write clearly and warmly for seniors."
+            },
             {"role": "user", "content": prompt}
         ],
-        temperature=0.8,
-        max_tokens=500
+        temperature=0.7,
+        max_tokens=250
     )
-    
-    result_text = response.choices[0].message.content.strip()
-    return render_template("match.html", username=username, result=result_text)
+
+    text = response.choices[0].message.content
+
+    # --- Simple parsing ---
+    match_reason = ""
+    outing_reason = ""
+
+    if "MATCH_REASON:" in text and "OUTING_REASON:" in text:
+        parts = text.split("OUTING_REASON:")
+        match_reason = parts[0].replace("MATCH_REASON:", "").strip()
+        outing_reason = parts[1].strip()
+
+    return render_template(
+        "dashboard.html",
+        user=user,
+        match=matched_user,
+        outing=suggested_outing,
+        match_reason=match_reason,
+        outing_reason=outing_reason,
+        suggestions=activities[:4]
+    )
 
 
 

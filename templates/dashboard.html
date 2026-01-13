@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Kingston Companions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="{{ url_for('dashboard') }}" class="logo-title">
+        <h1>Kingston Companions</h1>
+        <img src="{{ url_for('static', filename='logo.png') }}">
+    </a>
+
+    <nav>
+        <a class="active" href="#">Dashboard</a>
+        <a href="#">Find Matches</a>
+        <a href="#">View Outings</a>
+        <a href="#">Profile</a>
+        <a href="#">Logout</a>
+    </nav>
+</header>
+
+<main>
+
+    <h2>Someone you might enjoy meeting...</h2>
+
+    <section class="top-cards">
+
+        <!-- MATCH CARD -->
+        <div class="card match-card">
+            <img src="{{ url_for('static', filename='woman.jpg') }}" alt="Profile photo">
+            <h3>{{ match.username }}</h3>
+
+            <div class="tags">
+                {% for interest in match.interests.split(",") %}
+                    <span>{{ interest.strip() }}</span>
+                {% endfor %}
+            </div>
+
+            <p>{{ match_reason }}</p>
+
+            <button>💬 Say hello</button>
+        </div>
+
+        <!-- OUTING CARD -->
+        <div class="card outing-card">
+            <h3>Suggested outing</h3>
+
+            <img src="{{ url_for('static', filename='breakwater_park.webp') }}" alt="Outing">
+
+            <h4>{{ outing.name }}</h4>
+            <p>{{ outing_reason }}</p>
+
+            <button>Invite {{ match.username }}</button>
+        </div>
+
+    </section>
+
+    <h2>You might like...</h2>
+
+    <section class="activity-grid">
+        {% for activity in suggestions %}
+            <div class="activity-card">
+                <img src="{{ url_for('static', filename='placeholder_activity.jpg') }}" alt="Activity">
+                <p>{{ activity.name }}</p>
+                <span class="interest-count">
+                    {{ loop.index * 3 }} people interested
+                </span>
+            </div>
+        {% endfor %}
+    </section>
+
+</main>
+
+</body>
+</html>
