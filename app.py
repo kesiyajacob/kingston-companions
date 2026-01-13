@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from models import db, User, Activity
+from werkzeug.security import generate_password_hash, check_password_hash
 import openai
-
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
@@ -18,8 +18,7 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-# Make sure your OpenAI API key is set
-# export OPENAI_API_KEY="your_key_here"
+#------Home route----------------------------------
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -41,6 +40,9 @@ def index():
         return redirect(url_for("match"))
 
     return render_template("index.html")
+
+
+#------Match route----------------------------------
 
 
 @app.route("/match")
@@ -112,6 +114,50 @@ Here are some potential friends:
     
     result_text = response.choices[0].message.content.strip()
     return render_template("match.html", username=username, result=result_text)
+
+
+
+#--------------LOGIN------------------------------------
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method =='POST':
+        username=request.form['username']
+        password=request.form['password']
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and check_password_hash(user.password, password):
+            session['user_id'] = user.id
+            flash('Login successful!', 'success')
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Invalid username or password', 'danger')
+
+    return render_template('auth.html', active_tab='login')
+
+#--------------REGISTER-------------------------------------
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method =="POST":
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+
+        if User.query.filter_by(username=username).first():
+            flash('Username not available', 'danger')
+        elif User.query.filter_by(email=email).first():
+            flash('There is already an account with this email', 'danger')
+        else: 
+            password_hash= generate_password_hash(password)
+
+            new_user = User(username= username, email=email, password=password_hash)
+
+            db.session.add(new_user)
+            db.session.commit()
+            session['user_id'] = new_user.id
+            return redirect(url_for('dashboard'))
+    return render_template('auth.html', active_tab='register')
 
 
 if __name__ == "__main__":

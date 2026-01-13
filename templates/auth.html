@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Kingston Companions</title>
+</head>
+<body>
+    <div class = 'header'>
+        <h1>Kingston Companions</h1>
+        <img class="logo" src="static/logo.jpg" alt="Logo">
+        <p class="welcome-desc">Meet people who share your interests, discover local activities, </p>
+        <p class="welcome-desc">and feel part of your community.</p>
+    </div>
+<!-- -------- ----Flashed messages config---------------------------------------------------->
+
+    {% with messages = get_flashed_messages(with_categories=true)%}
+        {% if messages %}
+            <div class ="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message {{category}}">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+ 
+<!-- -------- ---------tab for login/register-------------------------------------------------->
+<div class="page-wrapper">
+<div class="tab-nav">
+    <button class="tab-button {% if active_tab=='login' %} active{% endif %}" onclick="showForm(event, 'login')">Login</button>
+    <button class="tab-button {% if active_tab=='register' %} active{% endif %}" onclick="showForm(event,'register')">Register</button>
+</div>
+<!-- -------- ---------------login form------------------------------------------->
+<div class="form-container">
+    <div id="login-form" class="form-content {% if active_tab=='login' %} active{% endif %}" >
+        <form method ='POST' action = "{{url_for('login')}}">
+            <div class="form-group">
+                <label for="login-username">Username</label>
+                <input type="text" id="login-username" name = 'username'required>
+            </div>
+
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" name="password" required>
+            </div>
+            <button type="submit" class="btn-submit">Login</button>
+        </form>
+    </div>
+<!-- -------- ---------------register form------------------------------------------->
+    <div id='register-form' class="form-content {% if active_tab=='register' %} active{% endif %}">
+        <form method="POST" action = "{{url_for('register')}}">
+            <div class="form-group">
+                <label for="register-username">Username</label>
+                <input type="text" id="register-username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="register-email">Email</label>
+                <input type="email" id="register-email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="register-password">Password</label>
+                <input type="password" id="register-password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="register-confirm-password">Confirm Password</label>
+                <input type="password" id="register-confirm-password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn-submit">Create Account</button>
+        </form>
+    </div>
+</div>
+</div>
+<!-- -------- ------------javascript for toggling between login and register------------------------------------------->
+<script>
+    function showForm(event, formType){
+        const forms = document.querySelectorAll('.form-content');
+        forms.forEach(form => form.classList.remove('active'));
+
+        const tabs = document.querySelectorAll('.tab-button');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        document.getElementById(formType+'-form').classList.add('active');
+        event.target.classList.add('active');
+    }
+
+</script>
+
+</body>
+</html>

@@ -28,7 +28,7 @@ with app.app_context():
             name="Great Lakes Museum",
             keywords="history, learning, quiet, indoor",
             description="Discover exhibits about the ecology, history, and shipping of the Great Lakes, with interactive displays and artifacts."
-            
+            #add address
         ),
         Activity(
             name="Miller Museum of Geology",
@@ -162,8 +162,6 @@ with app.app_context():
             keywords="games, casual, conversational, indoor, seated",
             description="Play board games and socialize in a casual indoor café environment."
 
-        
-            
         ),Activity(
             name="The Grand Theatre",
             keywords="theatre, music, seated, indoor",
