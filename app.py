@@ -33,9 +33,15 @@ def index():
 def dashboard():
     username = session.get("username")
     if not username:
-        return render_template("auth.html")
+        return redirect(url_for("login"))
+    
 
     user = User.query.filter_by(username=username).first()
+    if user is None:
+        session.pop("username", None)
+        return redirect(url_for("login"))
+
+
     other_users = User.query.filter(User.username != username).all()
     activities = Activity.query.all()
 
