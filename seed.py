@@ -267,142 +267,160 @@ with app.app_context():
         ),Activity(
             name="Mio Gelato",
             keywords="food, casual, seated, indoor",
-            description="Enjoy handcrafted gelato in a small indoor café, perfect for a casual sweet treat."
-            
+            description="Enjoy handcrafted gelato in a small indoor café, perfect for a casual sweet treat.",
+            image="mioGelato.jpg"
+
         ),Activity(
             name="Pan Chancho",
             keywords="food, casual, indoor, conversational",
-            description="Dine at a bakery and café offering fresh bread, pastries, and light meals in a cozy indoor space."
+            description="Dine at a bakery and café offering fresh bread, pastries, and light meals in a cozy indoor space.",
+            image="panChancho.webp"
        
         ),Activity(
             name="Tango Nuevo",
             keywords="food, lively, seated, indoor",
-            description="Experience live music, dancing, and dining in a lively indoor venue."
+            description="Experience live music, dancing, and dining in a lively indoor venue.",
+            image="tango.jpg"
          
         ),Activity(
             name="Juniper Cafe",
             keywords="food, quiet, seated, indoor",
-            description="Relax with coffee, light meals, or pastries in a quiet, comfortable indoor café."
+            description="Relax with coffee, light meals, or pastries in a quiet, comfortable indoor café.",
+            image="juniper.jpg"
          
         ),Activity(
             name="The Everly",
             keywords="food, casual, seated, indoor",
-            description="Enjoy casual dining in a welcoming indoor space, with options for brunch or dinner."
+            description="Enjoy casual dining in a welcoming indoor space, with options for brunch or dinner.",
+            image="theEverly.webp"
            
         ),Activity(
             name="Chez Piggy",
             keywords="food, lively, seated, indoor",
-            description="Dine in a popular, lively restaurant with a cozy indoor atmosphere."
+            description="Dine in a popular, lively restaurant with a cozy indoor atmosphere.",
+            image="piggy.jpg"
         
         ),Activity(
             name="AquaTerra",
             keywords="food, scenic, seated, indoor",
-            description="Enjoy meals with waterfront views in a comfortable indoor restaurant setting."
+            description="Enjoy meals with waterfront views in a comfortable indoor restaurant setting.",
+            image="aquaterra.jpg"
         
         ),Activity(
             name="Olivea",
             keywords="food, lively, seated, indoor",
-            description="Dine in a modern indoor restaurant offering casual meals and a lively atmosphere."
+            description="Dine in a modern indoor restaurant offering casual meals and a lively atmosphere.",
+            image="olivea.jpeg"
             
           
         ),Activity(
             name="Phnom Penh",
             keywords="food, casual, seated, indoor",
-            description="Enjoy Cambodian cuisine and casual dining in a cozy indoor restaurant."
+            description="Enjoy Cambodian cuisine and casual dining in a cozy indoor restaurant.",
+            image="phnomPenh.jpg"
        
         ),Activity(
             name="Delightfully Different Tea Room",
             keywords="food, quiet, seated, indoor, high tea",
-            description="Enjoy a traditional high tea experience with pastries and tea in a quiet, indoor setting."
+            description="Enjoy a traditional high tea experience with pastries and tea in a quiet, indoor setting.",
+            image="teaRoom.jpg"
         
         ),Activity(
             name="Wooden Heads",
             keywords="food, casual, lively, indoor",
-            description="Relax with coffee, pastries, and casual indoor seating in a lively café atmosphere."
+            description="Enjoy gourmet pizza, and casual indoor seating.",
+            image="woodenHeads.jpeg"
             
         ),Activity(
             name="Cocoa Bistro",
             keywords="food, learning, workshop, indoor",
-            description="Participate in chocolate-making workshops or tastings in an indoor studio setting."
+            description="Participate in chocolate-making workshops or tastings in an indoor studio setting.",
+            image="cocoaBistro.jpg"
             
         ),Activity(
             name="The Toucan",
             keywords="food, lively, indoor",
-            description="Enjoy casual dining and beverages in a lively indoor environment with group-friendly seating."
+            description="Enjoy casual dining and beverages in a lively indoor environment with group-friendly seating.",
+            image="theToucan.jpg"
            
         ),
         Activity(
             name="Daft Brewing",
             keywords="food, casual, lively, indoor",
-            description="Taste local beers and socialize in a casual indoor brewery setting."
+            description="Taste local beers and socialize in a casual indoor brewery setting.",
+            image="daftBrewing.jpg"
         
         ),
         Activity(
             name="Amadeus Cafe",
             keywords="food, quiet, seated, indoor",
-            description="Relax with coffee, light meals, and quiet indoor seating in a cozy café."
+            description="Relax with coffee, light meals, and quiet indoor seating in a cozy café.",
+            image="amadeus.jpeg"
           
         ),Activity(
             name="LaVida Bistro & Social",
             keywords="food, casual, conversational, indoor",
-            description="Enjoy casual dining and socializing in a comfortable indoor bistro."
+            description="Enjoy casual dining and socializing in a comfortable indoor bistro.",
+            image="lavida.jpg"
            
         ),Activity(
             name="Cataraqui Golf & Country Club",
             keywords="sports, outdoor, walking, low-impact",
-            description="Play golf in a scenic outdoor course suitable for light exercise and socializing."
-            
+            description="Play golf in a scenic outdoor course suitable for light exercise and socializing.",
+            image="golf.jpeg"
         ),Activity(
             name="Artillery Park Aquatic Centre",
             keywords="exercise, indoor, low-impact",
-            description="Participate in indoor swimming and fitness activities designed for gentle exercise."
-       
+            description="Participate in indoor swimming and fitness activities designed for gentle exercise.",
+            image="artillerypool.webp"
+
         ),Activity(
-            name="Kingston Library",
+            name="Kingston Frontenac Public Library",
             keywords="learning, quiet, seated, indoor",
-            description="Browse books, attend readings, or enjoy quiet study in an indoor library space."
-        
-        ),
-        Activity(
-            name="Strategies Cafe",
-            keywords="games, lively, seated, indoor",
-            description="Play board games and socialize in a casual indoor café environment."
+            description="Browse books, attend readings, or enjoy quiet study in an indoor library space.",
+            image="publicLibrary.jpeg"
         
         ),Activity(
             name="Community Ice Rink Volunteering",
             keywords="community, volunteering, outdoor, active",
-            description="Volunteer for community ice rink activities, assisting with events and skating programs."
+            description="Volunteer for community ice rink activities, assisting with events and skating programs.",
+            image="communityIceVolunteering.jpeg"
            
         ),Activity(
             name="Grand Theatre Usher Volunteering",
             keywords="community, volunteering, indoor",
-            description="Volunteer as an usher for live performances, helping audience members in a seated indoor venue."
+            description="Volunteer as an usher for live performances, helping audience members in a seated indoor venue.",
+            image="grandTheatre.jpeg"
           
         ),Activity(
             name="Pumphouse Museum Model Railway Volunteer",
             keywords="community, volunteering, learning, indoor",
-            description="Volunteer with museum exhibits and model railway displays in a quiet indoor setting."
+            description="Volunteer with museum exhibits and model railway displays in a quiet indoor setting.",
+            image="pumphouse_museum.jpg"
            
         ),Activity(
             name="The Glass House",
-            keywords="music, lively, indoor",
-            description="Attend live music performances or art events in a lively indoor venue."
+            keywords="arts and crafts,learning, indoor",
+            description="Enjoy classes in stained glass, mosaic and glass fusing",
+            image="glassHouse.png"
          
         ),Activity(
-            name="Kingston Nerd Night",
+            name="Kingston Nerd Night at the Royal Canadian Legion Branch 560",
             keywords="learning, discussion, lively, indoor",
-            description="Join discussions, games, and social events for enthusiasts of comics, games, and pop culture indoors."
+            description="Join discussions, games, and social events for enthusiasts of comics, games, and pop culture indoors.",
+            image="nerdNight.webp"
             
         ),Activity(
             name="Splitsville Bowl",
             keywords="games, casual, lively, indoor",
-            description="Enjoy a fun bowling experience in a lively indoor venue suitable for groups."
-            
+            description="Enjoy a fun bowling experience in a lively indoor venue suitable for groups.",
+            image="splitsville.jpg"
+
         ),Activity(
             name="Something in the Water",
             keywords="games, casual, lively, indoor",
-            description="Participate in a social trivia night with games, questions, and friendly competition indoors."
-           
+            description="Participate in a social trivia night with games, questions, and friendly competition indoors.",
+            image="somethingInTheWater.jpg"
         )
         
     ]
