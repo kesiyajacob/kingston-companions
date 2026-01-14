@@ -1,8 +1,46 @@
-<h1>All Outings in Kingston</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Outings | Kingston Companions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='activity-hover.css') }}">
+</head>
+<body>
 
-{% for activity in activities %}
-    <div>
-        <h3>{{ activity.name }}</h3>
-        <p>{{ activity.description }}</p>
-    </div>
-{% endfor %}
+<header class="navbar">
+    <a href="{{ url_for('dashboard') }}" class="logo-title">
+        <h1>Kingston Companions</h1>
+        <img src="{{ url_for('static', filename='logo.png') }}">
+    </a>
+
+    <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="#">Find Matches</a>
+        <a class="active"href="/outings">View All Outings</a>
+        <a href="#">Profile</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <h2>All Outings in Kingston</h2>
+
+    <section class="suggestions-wrapper">
+        <div class="activity-grid">
+            {% for activity in activities %}
+                <div class="activity-card">
+                    <img src="{{ url_for('static', filename='activities/' + activity.image) }}" alt="{{ activity.name }}">
+                    <p>{{ activity.name }}</p>
+
+                    <div class="activity-overlay">
+                        <p class="activity-description">{{ activity.description }}</p>
+                        <a href="{{ activity.url }}" class="see-more-btn">See more</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+

@@ -5,6 +5,7 @@
     <title>Dashboard | Kingston Companions</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='activity-hover.css') }}">
 </head>
 <body>
 
@@ -69,6 +70,11 @@
                 <div class="activity-card">
                     <img src="{{ url_for('static', filename='activities/' + activity.image) }}" alt="{{ activity.name }}">
                     <p>{{ activity.name }}</p>
+
+                    <div class="activity-overlay">
+                        <p class="activity-description">{{ activity.description }}</p>
+                        <a href="{{ activity.url }}" class="see-more-btn">See more</a>
+                    </div>
                 </div>
             {% endfor %}
         </div>

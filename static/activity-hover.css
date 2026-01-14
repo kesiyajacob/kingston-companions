@@ -1,0 +1,52 @@
+/* Overlay container */
+.activity-card {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Blur image on hover */
+.activity-card:hover img {
+    filter: blur(3px);
+}
+
+/* Overlay hidden by default */
+.activity-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.92);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* center vertically */
+    align-items: center;     /* center horizontally */
+
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Show overlay on hover */
+.activity-card:hover .activity-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Description text */
+.activity-description {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+/* Button */
+.see-more-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid black;
+    background: #ffd966;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}

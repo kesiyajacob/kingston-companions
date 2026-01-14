@@ -86,7 +86,7 @@ button {
     text-align: center;
     display: flex;
     flex-direction: column;
-    height: 270px;
+    height: 250px;
     transition: transform 0.2s ease;
 }
 
