@@ -86,167 +86,188 @@ with app.app_context():
         Activity(
             name="Marine Museum",
             keywords="history, learning, quiet, indoor",
-            description="Explore exhibits on maritime history, ships, and artifacts indoors."
+            description="Explore exhibits on maritime history, ships, and artifacts indoors.",
+            image="marine_museum.jpg"
             
         ),
         Activity(
             name="The Screening Room",
             keywords="film, quiet, seated, indoor",
-            description="Watch independent and classic films in a small, comfortable indoor cinema."
+            description="Watch independent and classic films in a small, comfortable indoor cinema.",
+            image="the_screening_room.avif"
            
         ),
         Activity(
             name="Landmark Cinemas",
             keywords="film, seated, indoor, casual",
-            description="Enjoy popular movies in a modern indoor theater with comfortable seating and concessions."
+            description="Enjoy popular movies in a modern indoor theater with comfortable seating and concessions.",
+            image="landmark_cinemas.jpg"
            
-        ),
-       
-        Activity(
-            name="Barcadia",
-            keywords="games, indoor, lively",
-            description="Play arcade games and enjoy casual dining in a lively indoor space suitable for groups."
-            
         ),
         Activity(
             name="Bellevue House",
             keywords="history, learning, walking, scenic",
-            description="Tour the historic home of Canada’s first Prime Minister, including indoor exhibits and gardens."
+            description="Tour the historic home of Canada’s first Prime Minister, including indoor exhibits and gardens.",
+            image="bellevue_house.webp"
             
         ),
 
         Activity(
             name="Isabel Bader Centre for Performing Arts",
             keywords="theatre, music, seated, indoor",
-            description="Attend concerts, performances, and art events in a modern indoor venue."
+            description="Attend concerts, performances, and art events in a modern indoor venue.",
+            image="isabel_bader_centre.webp"
             
         ),
         Activity(
             name="Martello Alley",
             keywords="art, casual, outdoor, conversational",
-            description="Walk through an art-focused alley featuring local artists’ works in a casual, open space."
+            description="Walk through an art-focused alley featuring local artists’ works in a casual, open space.",
+            image="martello_alley.jpg"
           
         ),
         Activity(
             name="Improbable Escapes",
             keywords="games, puzzles, indoor, lively",
-            description="Solve puzzles and complete challenges in immersive escape rooms that encourage teamwork and problem-solving."
+            description="Solve puzzles and complete challenges in immersive escape rooms that encourage teamwork and problem-solving.",
+            image="improbable_escapes.jpg"
             
         ),
         Activity(
             name="Sherlock's Escapes",
             keywords="games, puzzles, indoor, lively",
-            description="Solve immersive puzzles and challenges in themed escape rooms indoors."
+            description="Solve immersive puzzles and challenges in themed escape rooms indoors.",
+            image="sherlocks_escapes.jpg"
             
         ),
         Activity(
             name="Amaranth Stoneware",
             keywords="art, crafts, quiet, seated, indoor",
-            description="Participate in pottery and ceramic workshops in a hands-on indoor studio environment."
+            description="Participate in pottery and ceramic workshops in a hands-on indoor studio environment.",
+            image="amaranth_stoneware.webp"
             
         ),
         Activity(
             name="Crock A Doodle",
             keywords="art, crafts, casual, seated, indoor",
-            description="Paint pottery and create art projects in a guided indoor studio setting."
+            description="Paint pottery and create art projects in a guided indoor studio setting.",
+            image="crock_a_doodle.webp"
           
         ),
         Activity(
             name="Tett Centre for Creativity & Learning",
             keywords="learning, creativity, quiet, seated, indoor",
-            description="Participate in creative workshops and hands-on learning experiences in a quiet indoor space."
+            description="Participate in creative workshops and hands-on learning experiences in a quiet indoor space.",
+            image="tett_centre.jpg"
            
         ),
         Activity(
-            name="Gangue art and history farms",
+            name="Gangue Art and History Farm",
             keywords="learning, creativity, outdoor",
-            description="Explore local farm life, art exhibits, and historic demonstrations in a rustic outdoor setting."
+            description="Explore local farm life, art exhibits, and historic demonstrations in a rustic outdoor setting.",
+            image="gangue_art_and_history_farm.webp"
            
         ),
         Activity(
             name="Novel Idea",
             keywords="books, learning, quiet, seated, indoor",
-            description="Browse books, attend readings, or participate in literary events in a quiet indoor space."
+            description="Browse books, attend readings, or participate in literary events in a quiet indoor space.",
+            image="novel_idea.webp"
             
         ),Activity(
             name="Strategies Board Game Café",
             keywords="games, casual, conversational, indoor, seated",
-            description="Play board games and socialize in a casual indoor café environment."
+            description="Play board games and socialize in a casual indoor café environment.",
+            image="strategies_board_game_cafe.jpg"
 
         ),Activity(
             name="The Grand Theatre",
             keywords="theatre, music, seated, indoor",
-            description="Attend live theatre performances, concerts, and cultural events in a seated indoor venue."
+            description="Attend live theatre performances, concerts, and cultural events in a seated indoor venue.",
+            image="grand_theatre.jpg"
             
         ),Activity(
             name="Knifey Spooney Cooking Classes",
             keywords="food, learning, standing, indoor",
-            description="Learn to cook in guided indoor workshops with hands-on participation."
+            description="Learn to cook in guided indoor workshops with hands-on participation.",
+            image="knifey_spooney_cooking_classes.webp"
            
         ),Activity(
             name="Victoria Park",
             keywords="nature, outdoor, walking, scenic, casual",
-            description="Relax or take a walk in a scenic, well-maintained park with benches, open spaces, and occasional events."
+            description="Relax or take a walk in a scenic, well-maintained park with benches, open spaces, and occasional events.",
+            image="victoria_park.JPG"
            
         ),
         Activity(
             name="Kingston Mills",
             keywords="history, scenic, outdoor, walking",
-            description="Visit the historic locks along the Rideau Canal, with walking trails and scenic views."
+            description="Visit the historic locks along the Rideau Canal, with walking trails and scenic views.",
+            image="kingston_mills.jpg"
            
         ),
          Activity(
             name="Kingston Trolley Tours",
             keywords="lively, seated, relaxed",
-            description="Take a guided trolley tour around Kingston to see historic sites while seated and relaxed."
+            description="Take a guided trolley tour around Kingston to see historic sites while seated and relaxed.",
+            image="kingston_trolley_tours.jpg"
            
         ),
         Activity(
             name="Kingston Waterfront Pathway",
             keywords="nature, scenic, walking, outdoor",
-            description="Walk or relax along the scenic waterfront path, with benches and lake views."
+            description="Walk or relax along the scenic waterfront path, with benches and lake views.",
+            image="kingston_waterfront_pathway.jpg"
             
         ),
         Activity(
             name="Grass Creek Park",
             keywords="nature, scenic, outdoor, walking",
-            description="Enjoy outdoor walking, nature, and casual relaxation in a scenic park setting."
+            description="Enjoy outdoor walking, nature, and casual relaxation in a scenic park setting.",
+            image="grass_creek_park.webp"
             
         ),
         Activity(
             name="Maclean Trail Park",
             keywords="nature, outdoor, walking, quiet",
-            description="Walk or bike along trails in a quiet outdoor park surrounded by nature."
+            description="Walk or bike along trails in a quiet outdoor park surrounded by nature.",
+            image="maclean_trail_park.jpg"
            
         ),Activity(
             name="Rotary Park",
             keywords="nature, outdoor, casual, walking",
-            description="Relax or stroll in a community park with open spaces and scenic views."
+            description="Relax or stroll in a community park with open spaces and scenic views.",
+            image="rotary_park.jpeg"
             
         ),Activity(
             name="Meadowbrook Park",
             keywords="nature, outdoor, casual, walking",
-            description="Enjoy a casual walk or leisure activities in a local outdoor park setting."
+            description="Enjoy a casual walk or leisure activities in a local outdoor park setting.",
+            image="meadowbrook_park.webp"
             
         ),Activity(
             name="K&P Trail",
             keywords="nature, outdoor, walking, scenic",
-            description="Hike or walk along a scenic trail that runs through natural areas and parks."
+            description="Hike or walk along a scenic trail that runs through natural areas and parks.",
+            image="k_and_p_trail.jpg"
             
         ),Activity(
             name="Rideau Trail",
             keywords="nature, outdoor, walking, scenic",
-            description="Take a scenic walk or hike along a long trail that features natural landscapes and historic points."
+            description="Take a scenic walk or hike along a long trail that features natural landscapes and historic points.",
+            image="rideau_trail.jpg"
             
         ),Activity(
             name="Lemoine Point",
             keywords="nature, scenic, outdoor, walking",
-            description="Walk or relax along natural trails with scenic lake views in a peaceful"
+            description="Walk or relax along natural trails with scenic lake views in a peaceful",
+            image="lemoine_point.webp"
             
         ),Activity(
             name="Douglas R. Fluhrer Park",
             keywords="nature, outdoor, casual, walking",
-            description="Enjoy outdoor recreation, walking trails, and picnic areas in a local park."
+            description="Enjoy outdoor recreation, walking trails, and picnic areas in a local park.",
+            image="douglas_r_fluhrer_park.jpg"
             
         ),Activity(
             name="Breakwater Park",
@@ -257,12 +278,14 @@ with app.app_context():
         ),Activity(
             name="Kingston Public Market",
             keywords="food, local, casual, outdoor, conversational",
-            description="Browse fresh produce, crafts, and artisanal goods in a lively outdoor market atmosphere."
+            description="Browse fresh produce, crafts, and artisanal goods in a lively outdoor market atmosphere.",
+            image="kingston_public_market.jpg"
            
         ),Activity(
             name="Kingston Brew Pub",
             keywords="food, casual, lively, indoor",
-            description="Enjoy casual dining, drinks, and conversation in a lively indoor environment."
+            description="Enjoy casual dining, drinks, and conversation in a lively indoor environment.",
+            image="kingston_brew_pub.jpg"
             
         ),Activity(
             name="Mio Gelato",
