@@ -217,6 +217,13 @@ def register():
         
     return render_template('auth.html', active_tab='register')
 
+#--------------LOGOUT-------------------------------------
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login')) 
+
 
 #--------------VIEW OUTINGS-------------------------------------
 
