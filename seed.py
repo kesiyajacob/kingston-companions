@@ -455,35 +455,40 @@ with app.app_context():
         'email': 'alice@example.com', 
         'password': generate_password_hash('password123'),  
         'interests': 'reading, gardening, knitting',
-        'bio': 'I love reading historical novels, knitting scarves, and relaxing in tea gardens.'
+        'bio': 'I love reading historical novels, knitting scarves, and relaxing in tea gardens.',
+        'mobility_level': 'medium'
     },
     {
         'username': 'Bob',
         'email': 'bob@example.com',  
         'password': generate_password_hash('password123'),  
         'interests': 'hiking, photography, cooking',
-        'bio': 'Outdoor enthusiast who loves capturing nature and trying new recipes.'
+        'bio': 'Outdoor enthusiast who loves capturing nature and trying new recipes.',
+        'mobility_level': 'very limited'
     },
     {
         'username': 'Carol',
         'email': 'carol@example.com',  
         'password': generate_password_hash('password123'),  
         'interests': 'painting, yoga, coffee shops',
-        'bio': 'Creative soul seeking peaceful activities and meaningful conversations.'
+        'bio': 'Creative soul seeking peaceful activities and meaningful conversations.',
+        'mobility_level': 'limited'
     },
     {
     "username": "Dave",
     "email": "dave@example.com",
     "password": generate_password_hash('password123'),
     "interests": "hiking, kayaking, photography", 
-    "bio": "I love active adventures like hiking, kayaking, and photography outdoors."
+    "bio": "I love active adventures like hiking, kayaking, and photography outdoors.",
+    "mobility_level": "high"
 },
 {
     "username": "Eve",
     "email": "eve@example.com",
     "password": generate_password_hash('password123'),
     "interests": "music, theatre, dancing", 
-    "bio": "I enjoy music, theatre, and dancing at social events."
+    "bio": "I enjoy music, theatre, and dancing at social events.",
+    "mobility_level": "moderate"
 }
 
 ]
@@ -497,7 +502,8 @@ with app.app_context():
                 email=u['email'],
                 password=u['password'],
                 interests=u['interests'],
-                bio=u['bio']
+                bio=u['bio'],
+                mobility_level=u['mobility_level']
             )
         db.session.add(user)
     db.session.commit()

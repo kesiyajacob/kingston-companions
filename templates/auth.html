@@ -8,6 +8,9 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
 </head>
 <body>
+    
+</div>
+
     <div class = 'header'>
         <h1>Kingston Companions</h1>
         <img class="logo" src="static/logo.jpg" alt="Logo">
@@ -52,7 +55,7 @@
     </div>
 <!-- -------- ---------------register form------------------------------------------->
     <div id='register-form' class="form-content {% if active_tab=='register' %} active{% endif %}">
-        <form method="POST" action = "{{url_for('register')}}">
+        <form method="POST" action="{{url_for('register')}}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="register-username">Username</label>
                 <input type="text" id="register-username" name="username" required>
@@ -74,27 +77,45 @@
                 <textarea placeholder="Tell us a bit about yourself" id="register-bio" name="bio" required></textarea>
             </div>
             <div class="form-group">
-            <label>Select your interests (choose at least 3)</label>
-            <div class="interests-grid">
-                <button type="button" class="interest-btn" data-interest="Gardening">Gardening</button>
-                <button type="button" class="interest-btn" data-interest="Reading">Reading</button>
-                <button type="button" class="interest-btn" data-interest="Cooking">Cooking</button>
-                <button type="button" class="interest-btn" data-interest="Arts & Crafts">Arts & Crafts</button>
-                <button type="button" class="interest-btn" data-interest="Walking">Walking</button>
-                <button type="button" class="interest-btn" data-interest="Volunteering">Volunteering</button>
-                <button type="button" class="interest-btn" data-interest="Music">Music</button>
-                <button type="button" class="interest-btn" data-interest="Bird watching">Bird watching</button>
-                <button type="button" class="interest-btn" data-interest="Fishing">Fishing</button>
-                <button type="button" class="interest-btn" data-interest="Learning">Learning</button>
-                <button type="button" class="interest-btn" data-interest="Fitness">Fitness</button>
-                <button type="button" class="interest-btn" data-interest="Movies">Movies</button>
-                <button type="button" class="interest-btn" data-interest="Board Games">Board Games</button>
-                <button type="button" class="interest-btn" data-interest="Dancing">Dancing</button>
-                <button type="button" class="interest-btn" data-interest="Pets">Pets</button>
+                <label for="profile-pic">Profile Picture (optional)</label>
+                <input type="file" id="profile-pic" name="profile_pic" accept="image/*">
+                <div id="image-preview" style="display: none; margin-top: 10px;">
+                <img id="preview-img" src="" alt="Preview" style="max-width: 150px; max-height: 150px; border-radius: 50%; object-fit: cover;">
             </div>
-            <input type="hidden" name="interests" id="interests-input" required>
-            <p class="interest-count" id="interest-count">0 selected (minimum 3)</p>
         </div>
+            <div class="form-group">
+                <label>Select your interests (choose at least 3)</label>
+                <div class="interests-grid">
+                    <button type="button" class="interest-btn" data-interest="Gardening">Gardening</button>
+                    <button type="button" class="interest-btn" data-interest="Reading">Reading</button>
+                    <button type="button" class="interest-btn" data-interest="Cooking">Cooking</button>
+                    <button type="button" class="interest-btn" data-interest="Arts & Crafts">Arts & Crafts</button>
+                    <button type="button" class="interest-btn" data-interest="Walking">Walking</button>
+                    <button type="button" class="interest-btn" data-interest="Volunteering">Volunteering</button>
+                    <button type="button" class="interest-btn" data-interest="Music">Music</button>
+                    <button type="button" class="interest-btn" data-interest="Bird watching">Bird watching</button>
+                    <button type="button" class="interest-btn" data-interest="Fishing">Fishing</button>
+                    <button type="button" class="interest-btn" data-interest="Learning">Learning</button>
+                    <button type="button" class="interest-btn" data-interest="Fitness">Fitness</button>
+                    <button type="button" class="interest-btn" data-interest="Movies">Movies</button>
+                    <button type="button" class="interest-btn" data-interest="Board Games">Board Games</button>
+                    <button type="button" class="interest-btn" data-interest="Dancing">Dancing</button>
+                    <button type="button" class="interest-btn" data-interest="Pets">Pets</button>
+                </div>
+                <input type="hidden" name="interests" id="interests-input" required>
+                <p class="interest-count" id="interest-count">0 selected (minimum 3)</p>
+            </div>
+            <div class="form-group">
+                <label>Your mobility level</label>
+                <div class="mobility-options">
+                    <button type="button" class="mobility-btn" data-mobility="Very Limited">Very Limited</button>
+                    <button type="button" class="mobility-btn" data-mobility="Limited">Limited</button>
+                    <button type="button" class="mobility-btn" data-mobility="Moderate">Moderate</button>
+                    <button type="button" class="mobility-btn" data-mobility="High">High</button>
+                </div>
+                <input type="hidden" name="mobility_level" id="mobility-input" required>
+            </div>
+
             <button type="submit" class="btn-submit">Create Account</button>
         </form>
     </div>
@@ -161,6 +182,35 @@
             alert('Please select at least 3 interests');
         }
     });
+
+//----------------- Mobility level selection -----------------------------
+//----------------- Mobility level selection -----------------------------
+const mobilityButtons = document.querySelectorAll('.mobility-btn');
+const mobilityInput = document.getElementById('mobility-input');
+
+console.log('Found mobility buttons:', mobilityButtons.length); // Should be 4
+
+mobilityButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        console.log('Clicked:', this.getAttribute('data-mobility'));
+        console.log('Classes before:', this.className);
+        
+        // Remove selected class from all buttons
+        mobilityButtons.forEach(btn => btn.classList.remove('selected'));
+        
+        // Add selected class to clicked button
+        this.classList.add('selected');
+        
+        console.log('Classes after:', this.className);
+        
+        // Update hidden input
+        mobilityInput.value = this.getAttribute('data-mobility');
+        console.log('Hidden input value:', mobilityInput.value);
+    });
+});
+
 </script>
 
 </body>

@@ -8,7 +8,7 @@ body {
     font-family:  'Georgia';
     background: white;
     min-height: 100vh;
-    padding: 20px;
+
 }
 
 /* login/register styles */
@@ -74,7 +74,6 @@ body {
 }
 .form-content.active{
     display: block;
-    font-size: larger;
 }
 
 input[type='text'], input[type='email'], input[type='password'], textarea{
@@ -88,14 +87,18 @@ input[type='text'], input[type='email'], input[type='password'], textarea{
 textarea#register-bio {
    border: 2px solid black;
 }
+textarea#edit-bio {
+   border: 2px solid black;
+}
 
 .form-group{
     display:flex;
     flex-direction: column;
     margin-bottom: 1.5rem;
+    font-size: larger;
 }
 
-.btn-submit{
+.btn-submit, .btn-cancel{
     margin-top: 20px;
     padding:10px;
     border-radius: 8px;
@@ -103,16 +106,28 @@ textarea#register-bio {
     width: 100%;
     background: #DDF8CD;
     font-size: 0.9375rem;
-
+    font-family: 'Georgia';
 
     font-weight: 600;
   }
 
-  .btn-submit:hover{
+  .btn-submit:hover, .btn-cancel:hover{
     
-    background: #DDF8CD;
     cursor: pointer;
     transform: translateY(-1px);
+  }
+
+  .btn-cancel{
+    background: #FFCD62;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+  }
+
+  .button-group{
+    display: flex;
+    gap: 10px;
+
   }
 
   .header{
@@ -193,3 +208,37 @@ textarea {
         font-size: 14px;
     }
 }
+
+
+
+.mobility-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.mobility-btn {
+    padding: 14px;
+    border: 2px solid #333;
+    background: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    text-align: center;
+}
+
+.mobility-btn:hover {
+    background:#FFCD62;
+}
+
+.mobility-btn.selected {
+    background: #000 ;
+    color: white;
+    border-color: #000;
+}
+
+
+

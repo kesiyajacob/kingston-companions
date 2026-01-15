@@ -19,7 +19,7 @@
         <a class="active" href="#">Dashboard</a>
         <a href="#">Find Matches</a>
         <a href="/outings">View All Outings</a>
-        <a href="#">Profile</a>
+        <a href="/edit_profile">Profile</a>
         <a href="/logout">Logout</a>
     </nav>
 </header>
@@ -32,18 +32,30 @@
 
         <!-- MATCH CARD -->
         <div class="card match-card">
-            <img src="{{ url_for('static', filename='woman.jpg') }}" alt="Profile photo">
+    
+            {% if match.profile_pic and match.profile_pic != '' %}
+                <img src="{{ url_for('static', filename='profile_pics/' + match.profile_pic) }}" alt="{{ match.username }}'s profile photo">
+            {% else %}
+            <img src="{{ url_for('static', filename='woman.jpg') }}" alt="{{ match.username }}'s profile photo">
+             {% endif %}
+    
             <h3>{{ match.username }}</h3>
-
-            <div class="tags">
-                {% for interest in match.interests.split(",") %}
-                    <span>{{ interest.strip() }}</span>
-                {% endfor %}
+            <div class="bio">
+                <p>{{ match.bio }}</p>
             </div>
-
-            <p>{{ match_reason }}</p>
-
-            <button>💬 Say hello</button>
+            <div class="match-reason">
+                <strong>Why you matched:</strong>
+                <p>{{ match_reason }}</p>
+            </div>
+            <div class="interests">
+                <strong>Interests:</strong>
+                <div class="tags">
+                    {% for interest in match.interests.split(",") %}
+                    <span>{{ interest.strip() }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <button class="btn-say-hello">💬 Say hello</button>
         </div>
 
         <!-- OUTING CARD -->

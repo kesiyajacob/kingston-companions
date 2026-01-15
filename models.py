@@ -8,7 +8,9 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     interests = db.Column(db.String, nullable=False)  # comma-separated keywords
-    bio = db.Column(db.String, nullable=False) 
+    bio = db.Column(db.String, nullable=False)
+    profile_pic = db.Column(db.String(120), nullable=True) 
+    mobility_level = db.Column(db.String(50), nullable=True)
 
 class Activity(db.Model):
     id = db.Column(db.Integer, primary_key=True)

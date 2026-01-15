@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <title>Kingston Companions</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+</head>
+<body>
+
+
+    <div class="navbar">
+    <a href="{{ url_for('dashboard') }}" class="logo-title">
+        <h1>Kingston Companions</h1>
+        <img src="{{ url_for('static', filename='logo.png') }}">
+    </a>
+
+    <nav>
+        <a class="active" href="#">Dashboard</a>
+        <a href="#">Find Matches</a>
+        <a href="/outings">View All Outings</a>
+        <a href="/edit_profile">Profile</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</div>
+
+    <div class = 'header'>
+        <h2 style="margin-bottom: 20px;">Edit Your Profile</h2>
+    </div>
+
+    <div class="profile-edit-container" style="max-width: 450px; margin: auto;">
+    
+    
+    <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="edit-username">Username</label>
+            <input type="text" id="edit-username" name="username" value="{{ user.username }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="edit-email">Email</label>
+            <input type="email" id="edit-email" name="email" value="{{ user.email }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="edit-current-password">Current Password (required to save changes)</label>
+            <input type="password" id="edit-current-password" name="current_password" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="edit-new-password">New Password (optional - leave empty to keep current)</label>
+            <input type="password" id="edit-new-password" name="new_password">
+        </div>
+        
+        <div class="form-group">
+            <label for="edit-confirm-password">Confirm New Password</label>
+            <input type="password" id="edit-confirm-password" name="confirm_password">
+        </div>
+        
+        <div class="form-group">
+            <label for="edit-bio">About you</label>
+            <textarea placeholder="Tell us a bit about yourself" id="edit-bio" name="bio" required>{{ user.bio }}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="edit-profile-pic" style="margin-bottom: 10px;">Profile Picture</label>
+            
+            <!-- Current profile picture -->
+            <div class="current-profile-pic">
+                {% if user.profile_pic %}
+                    <img src="{{ url_for('static', filename='profile_pics/' + user.profile_pic) }}" alt="Current profile photo" style='width: 25%; height: auto; display: block; margin:auto;'>
+                    <p style="font-size: smaller; margin-bottom: 10px;">Current photo</p>
+                {% else %}
+                    <img src="{{ url_for('static', filename='woman.jpg') }}" alt="Default profile photo" style='width: 25%; height: auto; display: block; margin:auto;'>
+                    <p style="font-size: smaller; margin: 10px; text-align: center;">No photo uploaded</p>
+                {% endif %}
+            </div>
+
+            <input type="file" id="edit-profile-pic" name="profile_pic" accept="image/*" style=" display: block; margin: 20px auto;">
+
+            <div id="edit-image-preview" >
+                <p style="font-size: smaller; margin-bottom: 10px; text-align: center;">New photo preview:</p>
+                <img id="edit-preview-img" src="" alt="Preview" style='width: 25%; height: auto; font-size: smaller; display: block; margin:auto;' >
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Update your interests (choose at least 3)</label>
+            <div class="interests-grid">
+                <button type="button" class="interest-btn {% if 'Gardening' in user.interests %}selected{% endif %}" data-interest="Gardening">Gardening</button>
+                <button type="button" class="interest-btn {% if 'Reading' in user.interests %}selected{% endif %}" data-interest="Reading">Reading</button>
+                <button type="button" class="interest-btn {% if 'Cooking' in user.interests %}selected{% endif %}" data-interest="Cooking">Cooking</button>
+                <button type="button" class="interest-btn {% if 'Arts & Crafts' in user.interests %}selected{% endif %}" data-interest="Arts & Crafts">Arts & Crafts</button>
+                <button type="button" class="interest-btn {% if 'Walking' in user.interests %}selected{% endif %}" data-interest="Walking">Walking</button>
+                <button type="button" class="interest-btn {% if 'Volunteering' in user.interests %}selected{% endif %}" data-interest="Volunteering">Volunteering</button>
+                <button type="button" class="interest-btn {% if 'Music' in user.interests %}selected{% endif %}" data-interest="Music">Music</button>
+                <button type="button" class="interest-btn {% if 'Bird watching' in user.interests %}selected{% endif %}" data-interest="Bird watching">Bird watching</button>
+                <button type="button" class="interest-btn {% if 'Fishing' in user.interests %}selected{% endif %}" data-interest="Fishing">Fishing</button>
+                <button type="button" class="interest-btn {% if 'Learning' in user.interests %}selected{% endif %}" data-interest="Learning">Learning</button>
+                <button type="button" class="interest-btn {% if 'Fitness' in user.interests %}selected{% endif %}" data-interest="Fitness">Fitness</button>
+                <button type="button" class="interest-btn {% if 'Movies' in user.interests %}selected{% endif %}" data-interest="Movies">Movies</button>
+                <button type="button" class="interest-btn {% if 'Board Games' in user.interests %}selected{% endif %}" data-interest="Board Games">Board Games</button>
+                <button type="button" class="interest-btn {% if 'Dancing' in user.interests %}selected{% endif %}" data-interest="Dancing">Dancing</button>
+                <button type="button" class="interest-btn {% if 'Pets' in user.interests %}selected{% endif %}" data-interest="Pets">Pets</button>
+            </div>
+            <input type="hidden" name="interests" id="edit-interests-input" value="{{ user.interests }}" required>
+            <p class="interest-count" id="edit-interest-count">0 selected (minimum 3)</p>
+        </div>
+        
+        
+        <div class="button-group">
+            <button type="submit" class="btn-submit">Save Changes</button>
+            <a href="{{ url_for('dashboard') }}" class="btn-cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Image preview functionality for edit form
+document.getElementById('edit-profile-pic').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('edit-preview-img').src = e.target.result;
+            document.getElementById('edit-image-preview').style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    } else {
+        document.getElementById('edit-image-preview').style.display = 'none';
+    }
+});
+
+// Interest selection functionality
+const interestButtons = document.querySelectorAll('.interest-btn');
+const interestsInput = document.getElementById('edit-interests-input');
+const interestCount = document.getElementById('edit-interest-count');
+
+// Initialize selected interests from user data
+let selectedInterests = interestsInput.value ? interestsInput.value.split(',').map(i => i.trim()) : [];
+updateInterestCount();
+
+interestButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const interest = this.getAttribute('data-interest');
+        
+        if (this.classList.contains('selected')) {
+            this.classList.remove('selected');
+            selectedInterests = selectedInterests.filter(i => i !== interest);
+        } else {
+            this.classList.add('selected');
+            selectedInterests.push(interest);
+        }
+        
+        interestsInput.value = selectedInterests.join(', ');
+        updateInterestCount();
+    });
+});
+
+function updateInterestCount() {
+    const count = selectedInterests.length;
+    interestCount.textContent = `${count} selected (minimum 3)`;
+    
+    if (count >= 3) {
+        interestCount.style.color = 'green';
+    } else {
+        interestCount.style.color = 'red';
+    }
+}
+
+// Form validation
+document.querySelector('form').addEventListener('submit', function(e) {
+    const newPassword = document.getElementById('edit-new-password').value;
+    const confirmPassword = document.getElementById('edit-confirm-password').value;
+    
+    if (newPassword && newPassword !== confirmPassword) {
+        e.preventDefault();
+        alert('New passwords do not match!');
+        return;
+    }
+    
+    if (selectedInterests.length < 3) {
+        e.preventDefault();
+        alert('Please select at least 3 interests.');
+        return;
+    }
+});
+</script>
+
+</body>
+</html>
