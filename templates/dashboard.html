@@ -62,7 +62,7 @@
         <div class="card outing-card">
             <h3>Suggested outing</h3>
 
-            <img src="{{ url_for('static', filename='breakwater_park.webp') }}" alt="Outing">
+            <img src="{{ url_for('static', filename='activities/' + outing.image) }}" alt="{{ outing.name }}">
 
             <h4>{{ outing.name }}</h4>
             <p>{{ outing_reason }}</p>
