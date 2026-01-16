@@ -166,12 +166,12 @@ def dashboard():
 
     You are speaking directly to:
     User:
-    Name: {user.username}
+    Name: {user.name}
     Interests: {user.interests}
     Bio: {user.bio}
 
     You're introducing them to a potential friend:
-    Name: {matched_user.username}
+    Name: {matched_user.name}
     Interests: {matched_user.interests}
     Bio: {matched_user.bio}
 
@@ -179,7 +179,7 @@ def dashboard():
     Name: {suggested_outing.name}
     Description: {suggested_outing.description}
 
-    Please respond in this exact format, speaking directly to {user.username}:
+    Please respond in this exact format, speaking directly to {user.name}:
 
     MATCH_REASON:
     (2-3 friendly sentences explaining why these two people would get along)
@@ -245,6 +245,7 @@ def login():
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == "POST":
+        name = request.form['name']
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
@@ -284,10 +285,11 @@ def register():
                 print("DEBUG: No profile picture or empty filename")
                 
             new_user = User(
-                username=username, 
-                email=email, 
-                password=password_hash, 
-                bio=bio, 
+                name=name,
+                username=username,
+                email=email,
+                password=password_hash,
+                bio=bio,
                 interests=interests,
                 profile_pic=profile_pic_filename,
                 mobility_level=mobility_level
@@ -333,7 +335,8 @@ def edit_profile():
             flash('Incorrect current password', 'danger')
             return render_template('edit_profile.html', user=user)
         
-        # Update username and email
+        # Update name, username and email
+        new_name = request.form['name']
         new_username = request.form['username']
         new_email = request.form['email']
         
@@ -350,6 +353,7 @@ def edit_profile():
                 return render_template('edit_profile.html', user=user)
         
         # Update basic info
+        user.name = new_name
         user.username = new_username
         user.email = new_email
         user.bio = request.form['bio']

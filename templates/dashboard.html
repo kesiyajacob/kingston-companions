@@ -34,12 +34,12 @@
         <div class="card match-card">
     
             {% if match.profile_pic and match.profile_pic != '' %}
-                <img src="{{ url_for('static', filename='profile_pics/' + match.profile_pic) }}" alt="{{ match.username }}'s profile photo">
+                <img src="{{ url_for('static', filename='profile_pics/' + match.profile_pic) }}" alt="{{ match.name }}'s profile photo">
             {% else %}
-            <img src="{{ url_for('static', filename='woman.jpg') }}" alt="{{ match.username }}'s profile photo">
+            <img src="{{ url_for('static', filename='woman.jpg') }}" alt="{{ match.name }}'s profile photo">
              {% endif %}
 
-            <h3 style="text-align: center;">{{ match.username }}</h3>
+            <h3 style="text-align: center;">{{ match.name }}</h3>
             <div class="bio">
                 <p>{{ match.bio }}</p>
             </div>

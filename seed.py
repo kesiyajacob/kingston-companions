@@ -9,7 +9,7 @@ with app.app_context():
     activities = [
         Activity(
             name="Canada's Penitentiary Museum",
-            keywords="history, learning, quiet, seated, indoor, conversational",
+            keywords="history, learning, displays",
             description="Explore Canada’s federal corrections history in a historic building, with exhibits on prison life, rehabilitation programs, inmate arts and crafts, and historical artifacts",
             image="penitentiary.jpg"
 
@@ -450,7 +450,7 @@ with app.app_context():
 
 
     fake_users = [
-    {
+    {   'name': 'Alice Smith',
         'username': 'Alice',
         'email': 'alice@example.com', 
         'password': generate_password_hash('password123'),  
@@ -460,6 +460,7 @@ with app.app_context():
         'profile_pic': 'alice.jpg'
     },
     {
+        'name': 'Bob Johnson',
         'username': 'Bob',
         'email': 'bob@example.com',  
         'password': generate_password_hash('password123'),  
@@ -469,6 +470,7 @@ with app.app_context():
         'profile_pic': 'bob.webp'
     },
     {
+        'name': 'Carol Davis',
         'username': 'Carol',
         'email': 'carol@example.com',  
         'password': generate_password_hash('password123'),  
@@ -478,24 +480,25 @@ with app.app_context():
         'profile_pic': 'carol.webp'
     },
     {
-    "username": "Dave",
-    "email": "dave@example.com",
-    "password": generate_password_hash('password123'),
-    "interests": "hiking, kayaking, photography", 
-    "bio": "I love active adventures like hiking, kayaking, and photography outdoors.",
-    "mobility_level": "high",
-    "profile_pic": "dave.jpg"
-},
-{
-    "username": "Eve",
-    "email": "eve@example.com",
-    "password": generate_password_hash('password123'),
-    "interests": "music, theatre, dancing", 
-    "bio": "I enjoy music, theatre, and dancing at social events.",
-    "mobility_level": "moderate",
-    "profile_pic": "eve.jpg"
-}
-
+        'name': 'Dave Wilson',
+        'username': 'Dave',
+        'email': 'dave@example.com',
+        'password': generate_password_hash('password123'),
+        'interests': 'hiking, kayaking, photography',
+        'bio': 'I love active adventures like hiking, kayaking, and photography outdoors.',
+        'mobility_level': 'high',
+        'profile_pic': 'dave.jpg'
+    },
+    {
+        'name': 'Eve Adams',
+        'username': 'Eve',
+        'email': 'eve@example.com',
+        'password': generate_password_hash('password123'),
+        'interests': 'music, theatre, dancing',
+        'bio': 'I enjoy music, theatre, and dancing at social events.',
+        'mobility_level': 'moderate',
+        'profile_pic': 'eve.jpg'
+    }
 ]
 
 
@@ -503,6 +506,7 @@ with app.app_context():
     for u in fake_users:
         if not User.query.filter_by(username=u['username']).first():
             user = User(
+                name=u['name'],
                 username=u['username'],
                 email=u['email'],
                 password=u['password'],
