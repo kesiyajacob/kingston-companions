@@ -57,7 +57,7 @@
             </div>
 
             <a
-                href="mailto:{{ match.email }}?subject=Hello%20from%20Kingston%20Companions!"
+                href="mailto:{{ match.email }}?subject=Hello%20from%20{{ user.username|urlencode }}%20%7C%20Kingston%20Companions"
                 class="btn-say-hello"
             >
                 💬 Say hello
