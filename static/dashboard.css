@@ -105,6 +105,24 @@ button {
     background-color: #ffcc4d;
 }
 
+.btn-regenerate {
+    margin-top: 10px;
+    padding: 10px 18px;
+    border-radius: 20px;
+    border: 2px solid black;
+    background: #ffd966;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+}
+.btn-regenerate:hover {
+    background-color: #ffcc4d;
+}
+
+
 .activity-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

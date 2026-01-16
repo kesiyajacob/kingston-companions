@@ -57,10 +57,14 @@
             </div>
 
             <a
-                href="mailto:{{ match.email }}?subject=Hello%20from%20{{ user.username|urlencode }}%20%7C%20Kingston%20Companions"
+                href="mailto:{{ match.email }}?subject=Hello%20from%20{{ user.name|urlencode }}%20%7C%20Kingston%20Companions"
                 class="btn-say-hello"
             >
                 💬 Say hello
+            </a>
+
+            <a href="{{ url_for('regenerate') }}" class="btn-regenerate">
+                Regenerate Match
             </a>
         </div>
 
@@ -74,7 +78,7 @@
             <p>{{ outing_reason }}</p>
 
             <a
-            href="mailto:{{ match.email }}?subject=Invitation%20to%20join%20{{ user.username|urlencode }}%20for%20{{ outing.name|urlencode }}%20%7C%20Kingston%20Companions&body=Hi%20{{ match.username|urlencode }},%0D%0A%0D%0AI%20would%20like%20to%20invite%20you%20to%20join%20me%20for%20{{ outing.name|urlencode }}.%20It%20sounds%20like%20a%20great%20activity%20we%20could%20enjoy%20together!%0D%0A%0D%0ABest%20regards,%0D%0A{{ user.username|urlencode }}"
+            href="mailto:{{ match.email }}?subject=Invitation%20to%20join%20{{ user.name|urlencode }}%20for%20{{ outing.name|urlencode }}%20%7C%20Kingston%20Companions&body=Hi%20{{ match.name|urlencode }},%0D%0A%0D%0AI%20would%20like%20to%20invite%20you%20to%20join%20me%20for%20{{ outing.name|urlencode }}.%20It%20sounds%20like%20a%20great%20activity%20we%20could%20enjoy%20together!%0D%0A%0D%0ABest%20regards,%0D%0A{{ user.name|urlencode }}"
             class="btn-invite"
             >
             Invite {{ match.username }}
