@@ -56,11 +56,16 @@ def dashboard():
         suggested_outing = Activity.query.get(session['outing_id'])
         match_reason = session.get('match_reason', '')
         outing_reason = session.get('outing_reason', '')
-        activities = Activity.query.all()
-        # Also prepare suggestions, removing the suggested_outing
-        suggestions = [a for a in activities if a.id != suggested_outing.id][:4]
+        
+        # Get suggestions from session if available
+        if 'suggestion_ids' in session:
+            suggestion_ids = session['suggestion_ids']
+            suggestions = Activity.query.filter(Activity.id.in_(suggestion_ids)).all()
+        else:
+            activities = Activity.query.all()
+            suggestions = [a for a in activities if a.id != suggested_outing.id][:4]
     else:
-        # No session data, run AI logic and save to session (your existing code below)
+        # No session data, run AI logic and save to session
         
         other_users = User.query.filter(User.username != username).all()
         activities = Activity.query.all()
@@ -68,12 +73,54 @@ def dashboard():
         if not other_users:
             return "No other users to match with yet."
 
-        # MOCK or REAL OPENAI code here (use your existing code)
-        # For brevity, I only show the real OpenAI part; keep your existing AI logic here:
+        # ----- AI: Find best matching user FIRST -----
+        users_list = ""
+        for other in other_users:
+            users_list += f"- {other.username}: Interests: {other.interests}, Bio: {other.bio}\n"
 
-        # AI: Pick activities user might like
+        match_prompt = f"""
+        Current user:
+        Name: {user.name}
+        Interests: {user.interests}
+        Bio: {user.bio}
+
+        Potential friends:
+        {users_list}
+
+        Who would be the best friend match for {user.name}? Consider shared interests and compatible personalities.
+        Respond ONLY with the name of the best match.
+        """
+
+        match_response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a thoughtful matchmaker helping seniors form meaningful friendships."},
+                {"role": "user", "content": match_prompt}
+            ],
+            temperature=0.7,
+            max_tokens=50
+        )
+
+        matched_username = match_response.choices[0].message.content.strip()
+        matched_user = User.query.filter_by(username=matched_username).first()
+
+        # Fallback if AI returns invalid username
+        if not matched_user:
+            matched_user = random.choice(other_users)
+
+        # ----- Filter activities by BOTH users' mobility levels -----
+        mobility_hierarchy = {"Very Limited": 1, "Limited": 2, "Moderate": 3, "High": 4}
+
+        user_level = mobility_hierarchy.get(user.mobility_level, 1)
+        matched_level = mobility_hierarchy.get(matched_user.mobility_level, 1)
+        shared_level = min(user_level, matched_level)
+
+        # Get only activities that BOTH users can do
+        shared_activities = [a for a in activities if mobility_hierarchy.get(a.mobility_level, 1) <= shared_level]
+
+        # ----- AI: Pick activities from shared activities -----
         activity_list = ""
-        for act in activities:
+        for act in shared_activities:
             activity_list += f"- {act.name}: {act.description}\n"
 
         activity_prompt = f"""
@@ -100,58 +147,27 @@ def dashboard():
         chosen_names = [name.strip() for name in chosen_names.split(",")]
         suggestions = Activity.query.filter(Activity.name.in_(chosen_names)).all()
 
+        # Pick a random activity from suggestions for this match
         suggested_outing = random.choice(suggestions) if suggestions else activities[0]
 
+        # Remove the suggested outing and keep 4 suggestions
         suggestions = [
             activity for activity in suggestions
             if activity.id != suggested_outing.id
         ][:4]
 
-        # AI: Find best matching user
-        users_list = ""
-        for other in other_users:
-            users_list += f"- {other.username}: Interests: {other.interests}, Bio: {other.bio}\n"
-
-        match_prompt = f"""
-        Current user:
-        Name: {user.username}
-        Interests: {user.interests}
-        Bio: {user.bio}
-
-        Potential friends:
-        {users_list}
-
-        Who would be the best friend match for {user.username}? Consider shared interests and compatible personalities.
-        Respond ONLY with the username of the best match.
-        """
-
-        match_response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a thoughtful matchmaker helping seniors form meaningful friendships."},
-                {"role": "user", "content": match_prompt}
-            ],
-            temperature=0.7,
-            max_tokens=50
-        )
-
-        matched_username = match_response.choices[0].message.content.strip()
-        matched_user = User.query.filter_by(username=matched_username).first()
-
-        if not matched_user:
-            matched_user = random.choice(other_users)
-
+        # ----- Generate explanation -----
         prompt = f"""
         You are a warm, friendly matchmaker helping seniors in Kingston form friendships.
 
         You are speaking directly to:
         User:
-        Name: {user.username}
+        Name: {user.name}
         Interests: {user.interests}
         Bio: {user.bio}
 
         You're introducing them to a potential friend:
-        Name: {matched_user.username}
+        Name: {matched_user.name}
         Interests: {matched_user.interests}
         Bio: {matched_user.bio}
 
@@ -159,7 +175,7 @@ def dashboard():
         Name: {suggested_outing.name}
         Description: {suggested_outing.description}
 
-        Please respond in this exact format, speaking directly to {user.username}:
+        Please respond in this exact format, speaking directly to {user.name}:
 
         MATCH_REASON:
         (2-3 friendly sentences explaining why these two people would get along)
@@ -195,6 +211,7 @@ def dashboard():
         session['outing_id'] = suggested_outing.id
         session['match_reason'] = match_reason
         session['outing_reason'] = outing_reason
+        session['suggestion_ids'] = [s.id for s in suggestions]
 
     return render_template(
         "dashboard.html",
@@ -205,7 +222,6 @@ def dashboard():
         outing_reason=outing_reason,
         suggestions=suggestions
     )
-
 
 #--------------REGENERATE------------------------------------
 @app.route('/dashboard/regenerate')
@@ -226,7 +242,6 @@ def regenerate():
         flash("No other users to match with yet.")
         return redirect(url_for("dashboard"))
     
-
     # Get current match id from session to avoid re-selecting same user
     current_match_id = session.get('match_id')
 
@@ -240,33 +255,55 @@ def regenerate():
         # Pick a new matched user randomly from candidates
         new_match_user = random.choice(candidates)
 
-    # Now pick an outing that fits both user and new_match_user interests.
-    # Simplest approach: pick activities that match both users' interests.
-    # Assuming interests are comma-separated strings.
-    user_interests = set(i.strip().lower() for i in user.interests.split(",") if i.strip())
-    match_interests = set(i.strip().lower() for i in new_match_user.interests.split(",") if i.strip())
+    # ----- Filter activities by BOTH users' mobility levels -----
+    mobility_hierarchy = {"Very Limited": 1, "Limited": 2, "Moderate": 3, "High": 4}
 
-    common_interests = user_interests.intersection(match_interests)
+    user_level = mobility_hierarchy.get(user.mobility_level, 1)
+    matched_level = mobility_hierarchy.get(new_match_user.mobility_level, 1)
+    shared_level = min(user_level, matched_level)
 
-    # Filter activities whose names or descriptions contain any of the common interests keywords
-    def activity_matches_common_interests(activity):
-        text = (activity.name + " " + activity.description).lower()
-        return any(interest in text for interest in common_interests)
+    # Get only activities that BOTH users can do
+    shared_activities = [a for a in activities if mobility_hierarchy.get(a.mobility_level, 1) <= shared_level]
 
-    matching_activities = list(filter(activity_matches_common_interests, activities))
+    # ----- AI: Pick 5 activities from shared activities -----
+    activity_list = ""
+    for act in shared_activities:
+        activity_list += f"- {act.name}: {act.description}\n"
 
-    # If no matching activities, fallback to any activity
-    if not matching_activities:
-        suggested_outing = random.choice(activities)
-    else:
-        suggested_outing = random.choice(matching_activities)
+    activity_prompt = f"""
+    User interests: {user.interests}
 
-    # Generate match_reason and outing_reason via OpenAI prompt (reuse your existing prompt structure)
-    # Prepare users list (needed if you want AI to generate best match reason)
-    users_list = ""
-    for other in other_users:
-        users_list += f"- {other.username}: Interests: {other.interests}, Bio: {other.bio}\n"
+    Here are available places seniors in Kingston can visit:
+    {activity_list}
 
+    Choose the 5 places that best match the user's interests.
+    Respond ONLY with a comma-separated list of activity names.
+    """
+
+    activity_response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You recommend enjoyable outings for seniors."},
+            {"role": "user", "content": activity_prompt}
+        ],
+        temperature=0.7,
+        max_tokens=100
+    )
+
+    chosen_names = activity_response.choices[0].message.content
+    chosen_names = [name.strip() for name in chosen_names.split(",")]
+    suggestions = Activity.query.filter(Activity.name.in_(chosen_names)).all()
+
+    # Pick a random activity from suggestions for this match
+    suggested_outing = random.choice(suggestions) if suggestions else (shared_activities[0] if shared_activities else activities[0])
+
+    # Remove the suggested outing and keep 4 suggestions
+    suggestions = [
+        activity for activity in suggestions
+        if activity.id != suggested_outing.id
+    ][:4]
+
+    # ----- Generate match_reason and outing_reason -----
     prompt = f"""
     You are a warm, friendly matchmaker helping seniors in Kingston form friendships.
 
@@ -321,9 +358,11 @@ def regenerate():
     session['outing_id'] = suggested_outing.id
     session['match_reason'] = match_reason
     session['outing_reason'] = outing_reason
+    
+    # Store the 4 suggestion IDs in session
+    session['suggestion_ids'] = [s.id for s in suggestions]
 
     return redirect(url_for('dashboard'))
-
 
 
 #--------------LOGIN------------------------------------
@@ -498,7 +537,6 @@ def edit_profile():
         
         db.session.commit()
         session['username'] = user.username  # Update session if username changed
-        flash('Profile updated successfully!', 'success')
         return redirect(url_for('dashboard', user=user))
     
     return render_template('edit_profile.html', user=user)

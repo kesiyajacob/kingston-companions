@@ -20,5 +20,6 @@ class Activity(db.Model):
     description = db.Column(db.Text)
     image = db.Column(db.String(200))
     url = db.Column(db.String(200))
+    mobility_level = db.Column(db.String(50), nullable=True)
     
     
