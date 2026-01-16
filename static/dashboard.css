@@ -122,6 +122,12 @@ button {
     background-color: #ffcc4d;
 }
 
+.card-buttons{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
 
 .activity-grid {
     display: grid;
