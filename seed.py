@@ -456,7 +456,8 @@ with app.app_context():
         'password': generate_password_hash('password123'),  
         'interests': 'reading, gardening, knitting',
         'bio': 'I love reading historical novels, knitting scarves, and relaxing in tea gardens.',
-        'mobility_level': 'medium'
+        'mobility_level': 'medium',
+        'profile_pic': 'alice.jpg'
     },
     {
         'username': 'Bob',
@@ -464,7 +465,8 @@ with app.app_context():
         'password': generate_password_hash('password123'),  
         'interests': 'hiking, photography, cooking',
         'bio': 'Outdoor enthusiast who loves capturing nature and trying new recipes.',
-        'mobility_level': 'very limited'
+        'mobility_level': 'very limited',
+        'profile_pic': 'bob.webp'
     },
     {
         'username': 'Carol',
@@ -472,7 +474,8 @@ with app.app_context():
         'password': generate_password_hash('password123'),  
         'interests': 'painting, yoga, coffee shops',
         'bio': 'Creative soul seeking peaceful activities and meaningful conversations.',
-        'mobility_level': 'limited'
+        'mobility_level': 'limited',
+        'profile_pic': 'carol.webp'
     },
     {
     "username": "Dave",
@@ -480,7 +483,8 @@ with app.app_context():
     "password": generate_password_hash('password123'),
     "interests": "hiking, kayaking, photography", 
     "bio": "I love active adventures like hiking, kayaking, and photography outdoors.",
-    "mobility_level": "high"
+    "mobility_level": "high",
+    "profile_pic": "dave.jpg"
 },
 {
     "username": "Eve",
@@ -488,7 +492,8 @@ with app.app_context():
     "password": generate_password_hash('password123'),
     "interests": "music, theatre, dancing", 
     "bio": "I enjoy music, theatre, and dancing at social events.",
-    "mobility_level": "moderate"
+    "mobility_level": "moderate",
+    "profile_pic": "eve.jpg"
 }
 
 ]
@@ -503,9 +508,10 @@ with app.app_context():
                 password=u['password'],
                 interests=u['interests'],
                 bio=u['bio'],
-                mobility_level=u['mobility_level']
+                mobility_level=u['mobility_level'],
+                profile_pic=u.get('profile_pic')
             )
-        db.session.add(user)
+            db.session.add(user)
     db.session.commit()
 
     print("Database seeded!")

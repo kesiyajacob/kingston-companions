@@ -97,7 +97,7 @@ def dashboard():
     Here are available places seniors in Kingston can visit:
     {activity_list}
 
-    Choose the 4 places that best match the user's interests.
+    Choose the 5 places that best match the user's interests.
     Respond ONLY with a comma-separated list of activity names.
     """
 
@@ -115,8 +115,15 @@ def dashboard():
     chosen_names = [name.strip() for name in chosen_names.split(",")]
     suggestions = Activity.query.filter(Activity.name.in_(chosen_names)).all()
 
-# Pick a random activity from suggestions for this match
+    # Pick a random activity from suggestions for this match
     suggested_outing = random.choice(suggestions) if suggestions else activities[0]
+
+    # Remove the suggested outing and keep 4 suggestions
+    suggestions = [
+        activity for activity in suggestions
+        if activity.id != suggested_outing.id
+    ][:4]
+
 
 # ----- AI: Find best matching user -----
     users_list = ""
