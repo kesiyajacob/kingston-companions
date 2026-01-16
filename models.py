@@ -19,5 +19,6 @@ class Activity(db.Model):
     keywords = db.Column(db.Text)
     description = db.Column(db.Text)
     image = db.Column(db.String(200))
+    url = db.Column(db.String(200))
     
     
