@@ -392,7 +392,7 @@ def edit_profile():
         db.session.commit()
         session['username'] = user.username  # Update session if username changed
         flash('Profile updated successfully!', 'success')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard', user=user))
     
     return render_template('edit_profile.html', user=user)
 

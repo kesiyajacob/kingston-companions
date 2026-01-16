@@ -86,7 +86,9 @@ button {
     font-size: 16px;
 }
 
-.btn-invite, .btn-say-hello {
+.btn-invite,
+.btn-say-hello {
+    display: inline-block;
     margin-bottom: 15px;
     padding: 10px 18px;
     border-radius: 20px;
@@ -94,6 +96,13 @@ button {
     background: #ffd966;
     cursor: pointer;
     font-size: 16px;
+    text-decoration: none;
+    color: black;
+}
+
+.btn-say-hello:hover,
+.btn-invite:hover {
+    background-color: #ffcc4d;
 }
 
 .activity-grid {
