@@ -453,12 +453,22 @@ def logout():
 
 #--------------VIEW OUTINGS-------------------------------------
 
-@app.route("/outings")
+@app.route('/outings')
 def outings():
-    activities = Activity.query.all()
-    return render_template("outings.html", activities=activities)
+    selected_levels = request.args.getlist('mobility')
 
+    if selected_levels:
+        activities = Activity.query.filter(
+            Activity.mobility_level.in_(selected_levels)
+        ).all()
+    else:
+        activities = Activity.query.all()
 
+    return render_template(
+        'outings.html',
+        activities=activities,
+        selected_levels=selected_levels
+    )
 
 
 #-----edit profile------------------------------

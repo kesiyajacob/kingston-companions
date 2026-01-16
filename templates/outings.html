@@ -17,7 +17,6 @@
 
     <nav>
         <a href="/dashboard">Dashboard</a>
-        <a href="#">Find Matches</a>
         <a class="active" href="/outings">View All Outings</a>
         <a href="/edit_profile">Profile</a>
         <a href="/logout">Logout</a>
@@ -27,6 +26,38 @@
 <main>
     <h2>All Outings in Kingston</h2>
 
+    <form method="GET" class="filter-bar">
+        <h3>Filter by mobility level</h3>
+
+        <label>
+            <input type="checkbox" name="mobility" value="Very Limited"
+                {% if 'Very Limited' in selected_levels %}checked{% endif %}>
+            Very limited
+        </label>
+
+        <label>
+            <input type="checkbox" name="mobility" value="Limited"
+                {% if 'Limited' in selected_levels %}checked{% endif %}>
+            Limited
+        </label>
+
+        <label>
+            <input type="checkbox" name="mobility" value="Moderate"
+                {% if 'Moderate' in selected_levels %}checked{% endif %}>
+            Moderate
+        </label>
+
+        <label>
+            <input type="checkbox" name="mobility" value="High"
+                {% if 'High' in selected_levels %}checked{% endif %}>
+            High
+        </label>
+
+        <button type="submit">Apply filters</button>
+    </form>
+
+
+
     <section class="suggestions-wrapper">
         <div class="activity-grid">
             {% for activity in activities %}
@@ -35,6 +66,12 @@
                     <p>{{ activity.name }}</p>
 
                     <div class="activity-overlay">
+                            <div class="mobility-level">
+                                <div class="tags">
+                                    <span>{{ activity.mobility_level }}</span>
+                                </div>
+                            </div>
+
                         <p class="activity-description">{{ activity.description }}</p>
                         <a href="{{ activity.url }}" class="see-more-btn">See more</a>
                     </div>
