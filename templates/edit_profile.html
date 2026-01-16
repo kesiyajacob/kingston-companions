@@ -71,7 +71,7 @@
             <div class="current-profile-pic">
                 {% if user.profile_pic %}
                     <img src="{{ url_for('static', filename='profile_pics/' + user.profile_pic) }}" alt="Current profile photo" style='width: 25%; height: auto; display: block; margin:auto;'>
-                    <p style="font-size: smaller; margin-bottom: 10px;">Current photo</p>
+                    <p style="font-size: smaller; margin: 10px; text-align: center;">Current photo</p>
                 {% else %}
                     <img src="{{ url_for('static', filename='woman.jpg') }}" alt="Default profile photo" style='width: 25%; height: auto; display: block; margin:auto;'>
                     <p style="font-size: smaller; margin: 10px; text-align: center;">No photo uploaded</p>
@@ -106,8 +106,19 @@
                 <button type="button" class="interest-btn {% if 'Pets' in user.interests %}selected{% endif %}" data-interest="Pets">Pets</button>
             </div>
             <input type="hidden" name="interests" id="edit-interests-input" value="{{ user.interests }}" required>
-            <p class="interest-count" id="edit-interest-count">0 selected (minimum 3)</p>
+            <p class="interest-count" id="edit-interest-count" style="background-color: white;">0 selected (minimum 3)</p>
         </div>
+
+        <div class="form-group">
+            <label>Your mobility level</label>
+            <div class="mobility-options">
+                <button type="button" class="mobility-btn {% if user.mobility_level == 'Very Limited' %}selected{% endif %}" data-mobility="Very Limited">Very Limited</button>
+                <button type="button" class="mobility-btn {% if user.mobility_level == 'Limited' %}selected{% endif %}" data-mobility="Limited">Limited</button>
+                <button type="button" class="mobility-btn {% if user.mobility_level == 'Moderate' %}selected{% endif %}" data-mobility="Moderate">Moderate</button>
+                <button type="button" class="mobility-btn {% if user.mobility_level == 'High' %}selected{% endif %}" data-mobility="High">High</button>
+        </div>
+    <input type="hidden" name="mobility_level" id="edit-mobility-input" value="{{ user.mobility_level or '' }}" required>
+</div>
         
         
         <div class="button-group">
@@ -118,6 +129,26 @@
 </div>
 
 <script>
+    //----------------- Mobility level selection -----------------------------
+const editMobilityButtons = document.querySelectorAll('.mobility-btn');
+const editMobilityInput = document.getElementById('edit-mobility-input');
+
+editMobilityButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove selected class from all buttons
+        editMobilityButtons.forEach(btn => btn.classList.remove('selected'));
+        
+        // Add selected class to clicked button
+        this.classList.add('selected');
+        
+        // Update hidden input
+        editMobilityInput.value = this.getAttribute('data-mobility');
+    });
+});
+
+
     // Image preview functionality for edit form
 document.getElementById('edit-profile-pic').addEventListener('change', function(e) {
     const file = e.target.files[0];

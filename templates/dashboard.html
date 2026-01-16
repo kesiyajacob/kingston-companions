@@ -38,23 +38,24 @@
             {% else %}
             <img src="{{ url_for('static', filename='woman.jpg') }}" alt="{{ match.username }}'s profile photo">
              {% endif %}
-    
-            <h3>{{ match.username }}</h3>
+
+            <h3 style="text-align: center;">{{ match.username }}</h3>
             <div class="bio">
                 <p>{{ match.bio }}</p>
             </div>
-            <div class="match-reason">
-                <strong>Why you matched:</strong>
-                <p>{{ match_reason }}</p>
-            </div>
-            <div class="interests">
-                <strong>Interests:</strong>
-                <div class="tags">
+            <div class="interests" >
+                <strong style="margin-bottom: 20px;">Interests:</strong>
+                <div class="tags" style="margin-top: 10px; margin-bottom: 5px;">
                     {% for interest in match.interests.split(",") %}
                     <span>{{ interest.strip() }}</span>
                     {% endfor %}
                 </div>
             </div>
+            <div class="match-reason">
+                <strong style="margin-bottom: 5px;">Why you matched:</strong>
+                <p style="margin-top: 10px;">{{ match_reason }}</p>
+            </div>
+
             <button class="btn-say-hello">💬 Say hello</button>
         </div>
 
@@ -67,7 +68,7 @@
             <h4>{{ outing.name }}</h4>
             <p>{{ outing_reason }}</p>
 
-            <button>Invite {{ match.username }}</button>
+            <button class="btn-invite">Invite {{ match.username }}</button>
         </div>
 
     </section>

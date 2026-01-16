@@ -99,7 +99,7 @@ textarea#edit-bio {
 }
 
 .btn-submit, .btn-cancel{
-    margin-top: 20px;
+    margin-top: 10px;
     padding:10px;
     border-radius: 8px;
     border: solid black;
@@ -107,7 +107,7 @@ textarea#edit-bio {
     background: #DDF8CD;
     font-size: 0.9375rem;
     font-family: 'Georgia';
-
+    margin-bottom: 20px;
     font-weight: 600;
   }
 
@@ -127,6 +127,7 @@ textarea#edit-bio {
   .button-group{
     display: flex;
     gap: 10px;
+    margin-bottom: 20px;
 
   }
 
@@ -183,7 +184,7 @@ textarea#edit-bio {
 
 .interest-count {
     font-size: 14px;
-    color: #666;
+    background-color: white;
     margin-top: 10px;
     text-align: center;
 }

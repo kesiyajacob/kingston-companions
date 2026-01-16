@@ -347,6 +347,7 @@ def edit_profile():
         user.email = new_email
         user.bio = request.form['bio']
         user.interests = request.form['interests']
+        user.mobility_level = request.form['mobility_level']
         
         # Handle profile picture update
         profile_pic = request.files.get('profile_pic')

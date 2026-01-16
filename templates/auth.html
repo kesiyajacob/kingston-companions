@@ -176,14 +176,13 @@
     });
     
     // Form validation
-    document.getElementById('register-form-element').addEventListener('submit', function(e) {
+    document.getElementById('register-form').addEventListener('submit', function(e) {
         if (selectedInterests.length < 3) {
             e.preventDefault();
             alert('Please select at least 3 interests');
         }
     });
 
-//----------------- Mobility level selection -----------------------------
 //----------------- Mobility level selection -----------------------------
 const mobilityButtons = document.querySelectorAll('.mobility-btn');
 const mobilityInput = document.getElementById('mobility-input');
